@@ -1,3 +1,5 @@
+package file;
+
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
