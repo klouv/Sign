@@ -9,6 +9,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
@@ -74,8 +75,22 @@ public class SignEvent implements Listener {
         String komut = command.get(id);
         Player player = event.getPlayer();
         //consol sender naısl kullanılıyoır
+        Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender() , command.get(id) + player.getName());
 
         player.sendMessage("test 2");
+    }
+
+    public void onSignBreak(BlockBreakEvent event){
+        Block block = event.getBlock();
+        if (block == null || block.getType() == Material.AIR) return;
+        if (!locations.containsKey(event.getBlock().getLocation())) return;
+        if (event.getPlayer().hasPermission("klouvsign.break")) {
+            locations.remove(block.getLocation());
+            return;
+        }
+        event.getPlayer().sendMessage("yetkin yok puşt");
+        event.setCancelled(true);
+
     }
 
 }
